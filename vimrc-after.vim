@@ -80,3 +80,25 @@ nnoremap / /\v
 cnoremap %s/ %s/\v
 
 set guifont=Source\ Code\ Pro\ Light
+
+" Disable Highlighting tabs and longlines - borrowed from jszakmeister
+
+function! CustomSetupSource()
+    call SetupSource()
+    Highlight nolonglines notabs
+endfunction
+command! -bar SetupSource call CustomSetupSource()
+
+" Same as the above, but for C.
+function! CustomSetupC()
+    call SetupC()
+    Highlight nolonglines notabs
+
+    " Cope with Doxygen style /// comments.
+    setlocal comments=s:/*,mb:\ ,e-4:*/,:///,://
+endfunction
+command! -bar SetupC call CustomSetupC()
+
+" Replace trailing spaces with a dot and tabs with an arrow
+set listchars=trail:·,precedes:«,extends:»,tab:▸\ 
+set list
